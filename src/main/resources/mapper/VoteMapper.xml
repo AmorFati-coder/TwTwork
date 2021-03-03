@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.example.vote.dao.VoteMapper">
+    <select id="getAllVote" resultType="Vote">
+        select
+               choice.text,
+               v.subject,
+               u.username
+        from choice
+            left join vote v
+                on choice.choice_id = v.choice_id
+            left join user u
+                on v.user_id = u.user_id
+        where user_id = #{userId}
+    </select>
+
+    <insert id="addVote">
+        insert into
+            vote (user_id, choice_id, subject)
+            VALUES (#{userId},#{choiceId},#{subject})
+    </insert>
+
+    <delete id="deleteVote">
+        delete from vote where vote_id=#{votId}
+    </delete>
+</mapper>
